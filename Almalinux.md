@@ -3,9 +3,10 @@ Linux deployment practices
 
 ## AlmaLinux VM on Hyper-V
 
-### Installation options:
-- Use `/boot/efi` with `1gib` size as boot partition
-- Disable LVM and use __standard partitioning__
+__Installation options:__
+
+- [x] Use `/boot/efi` with `1gib` size as boot partition
+Disable LVM and use __standard partitioning__
 - Now __XFS__ most appropriate to use in VM context for root `/` storage, assign rest of space
 - Use nearest NTP pool, for example `ca.ntp.pool.org` or `lt.ntp.pool.org`
 - Configure IPv4 network interface and disable IPv6
@@ -14,7 +15,7 @@ Linux deployment practices
 - Use __Minimal Installation__ mode
 
 ### Post installation options
-- Update installed system, enabel `epel` repository and install utilities
+Update installed system, enabel `epel` repository and install utilities
 ```bash
 sudo -s
 dnf -y update && dnf -y install epel-release && reboot
@@ -24,7 +25,7 @@ reboot
 ```bash
 free -h
 ```
-- Disable Dynamic Memory guest service module (log message flooding) using `modprobe.d` or kernel command
+Disable Dynamic Memory guest service module (log message flooding) using `modprobe.d` or kernel command
 ```bash
 sudo -s
 echo "blacklist hv_balloon" > /etc/modprobe.d/blacklist-hv_balloon.conf
