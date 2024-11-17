@@ -1,13 +1,13 @@
-# Linux
+# AlmaLinux
 Linux deployment practices
 
-## AlmaLinux VM on Hyper-V
+## AlamLinux Hyper-V VM
 
 __Installation options:__
 
-- [x] Use `/boot/efi` with `1gib` size as boot partition
+1. Use `/boot/efi` with `1gib` size as boot partition
 Disable LVM and use __standard partitioning__
-- Now __XFS__ most appropriate to use in VM context for root `/` storage, assign rest of space
+2. Now __XFS__ most appropriate to use in VM context for root `/` storage, assign rest of space
 - Use nearest NTP pool, for example `ca.ntp.pool.org` or `lt.ntp.pool.org`
 - Configure IPv4 network interface and disable IPv6
 - Leave `root` user account disabled
