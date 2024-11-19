@@ -1,7 +1,7 @@
 # AlmaLinux
 Linux deployment practices
 
-## AlamLinux Hyper-V VM
+## Install Hyper-V VM
 
 __Installation options:__
 
@@ -19,18 +19,26 @@ __Post installation options__
 Update installed system, enabel `epel` repository and install utilities
 ```bash
 sudo -s
-dnf -y update && dnf -y install epel-release && reboot
-dnf -y install hyperv* zram-generator nano curl wget htop glibc-all-langpacks
-reboot
+dnf -y update
+dnf -y install epel-release
+dnf -y install hyperv* zram-generator
+dnf -y install nano curl wget htop
+dnf -y install glibc-all-langpacks
 ```
 Check Swap via zram is operating
 ```bash
 free -h
 ```
 
-__Known issues__
+## Tips
 
-Disable _Hyper-V Dynamic Memory_ guest service module (log message flooding) using `modprobe.d` or kernel command (_just checked this solution_)
+Disable __PHP__ information exposure
+```bash
+sed -i 's/^expose_php = On/expose_php = Off/' /etc/php.ini
+systemctl restart nginx php-fpm
+```
+
+Disable __Hyper-V Dynamic Memory__ guest service module (log message flooding) using `modprobe.d` or kernel command (_just checked this solution_)
 ```bash
 sudo -s
 echo "blacklist hv_balloon" > /etc/modprobe.d/blacklist-hv_balloon.conf
@@ -40,6 +48,7 @@ reboot
 ```bash
 lsmod | grep hv_balloon
 ```
+Alternative way to add loader kernel option:
 ```bash
 sudo -s
 nano /etc/default/grub
@@ -47,3 +56,4 @@ nano /etc/default/grub
 grub2-mkconfig -o /boot/grub2/grub.cfg
 reboot
 ```
+
