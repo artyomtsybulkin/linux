@@ -21,6 +21,7 @@ Update installed system, enabel `epel` repository and install utilities
 sudo -s
 dnf -y update
 dnf -y install epel-release
+dnf -y update
 dnf -y install hyperv* zram-generator
 dnf -y install nano curl wget htop
 dnf -y install glibc-all-langpacks
