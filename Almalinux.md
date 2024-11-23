@@ -33,6 +33,32 @@ free -h
 
 ## Tips
 
+Install Nginx Official
+```bash
+yum install yum-utils
+
+sed -i '/pattern/a \
+[nginx-stable] \
+name=nginx stable repo \
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ \
+gpgcheck=1 \
+enabled=1 \
+gpgkey=https://nginx.org/keys/nginx_signing.key \
+module_hotfixes=true' /etc/yum.repos.d/nginx.repo
+
+yum-config-manager --enable nginx-mainline
+yum install nginx
+```
+
+Install PHP from remi
+```bash
+dnf -y install https://rpms.remirepo.net/enterprise/remi-release-9.5.rpm
+dnf -y install yum-utils
+dnf module reset php
+dnf module install php:remi-8.3
+dnf update && dnf install php-fpm
+```
+
 Disable __PHP__ information exposure
 ```bash
 sed -i 's/^expose_php = On/expose_php = Off/' /etc/php.ini
@@ -49,6 +75,7 @@ reboot
 ```bash
 lsmod | grep hv_balloon
 ```
+
 Alternative way to add loader kernel option:
 ```bash
 sudo -s
