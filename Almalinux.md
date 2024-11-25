@@ -37,7 +37,8 @@ Storage optimization can be performed via these two options. Edit `nano /etc/fst
 UUID=<your-uuid> /mnt/data ext4 defaults,nobarrier 0 0
 ```
 
-ANd disable io scheduler, because in guest OS host manages this: `nano /etc/udev/rules.d/60-io-scheduler.rules`
+On AlmaLinux none will be default scheduler when operating as guest.
+And disable io scheduler, because in guest OS host manages this: `nano /etc/udev/rules.d/60-io-scheduler.rules`
 
 ```bash
 ACTION=="add|change", KERNEL=="sd[a-z]|nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none"
@@ -239,4 +240,27 @@ In case of secondary adapter, route, address:
 
 ```bash
 sysctl -w net.ipv4.ip_forward=1
+```
+
+## dnf automatic
+
+Install and edit systemd service to run each Monday:
+```bash
+dnf install -y dnf-automatic
+nano /usr/lib/systemd/system/dnf-automatic.timer
+```
+```bash
+OnCalendar=Mon *-*-01..12 10:00
+```
+
+Edit `nano /etc/dnf/automatic.conf`
+```bash
+apply_updates = no > apply_updates = yes
+reboot = never > reboot = when-needed
+```
+Reload services and enable:
+```bash
+systemctl enable dnf-automatic.timer
+systemctl daemon-reload
+systemctl start dnf-automatic.timer
 ```
