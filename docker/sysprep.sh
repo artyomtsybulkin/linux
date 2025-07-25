@@ -1,5 +1,8 @@
 #!/bin/bash
 
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
 docker network create --driver bridge \
     --subnet 10.10.90.0/24 --gateway 10.10.90.1 public_network
 docker network create --driver bridge \
